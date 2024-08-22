@@ -1,31 +1,42 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34728.123
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Project1.vcxproj", "{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Debug|x64.ActiveCfg = Debug|x64
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Debug|x64.Build.0 = Debug|x64
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Debug|x86.ActiveCfg = Debug|Win32
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Debug|x86.Build.0 = Debug|Win32
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Release|x64.ActiveCfg = Release|x64
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Release|x64.Build.0 = Release|x64
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Release|x86.ActiveCfg = Release|Win32
-		{F9E9CA15-5CAD-4F69-9C08-5EBB735713F1}.Release|x86.Build.0 = Release|Win32
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {04C3C9D2-4AC6-47DF-9D47-48CC581A47A2}
-	EndGlobalSection
-EndGlobal
+
+#include<vector>
+#include<algorithm>
+#include<iostream>
+
+
+using namespace std;
+
+// A / b，商是C，余数是r
+vector<int> div(vector<int>& A, int b, int& r)
+{
+	vector<int> C;
+	r = 0;
+	for (int i = A.size() - 1; i >= 0; i--)
+	{
+		r = r * 10 + A[i];
+		C.push_back(r / b);
+		r %= b;
+	}
+
+	reverse(C.begin(), C.end());
+	while (C.size() > 1 && C.back() == 0)C.pop_back();
+
+	return C;
+}
+
+
+int  main()
+{
+	string a;
+	int b;
+    
+	cin >> a >> b;
+	vector<int> A;
+	for (int i = a.size() - 1; i >= 0; i--)A.push_back(a[i] - '0');
+
+	int r;
+	auto C = div(A, b, r);
+
+	for (int i = C.size() - 1; i >= 0; i--)printf("%d", C[i]);
+	cout << endl << r << endl;
+}
